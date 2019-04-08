@@ -3,25 +3,19 @@
 #include <vector>
 #include <algorithm>
 
-
 using namespace std;
 
 void importData(vector<string> &myData);
 void printData(vector<string> &myData);
-int numberOfZeros(vector<string> &myData);
-int numberOfOnes(vector<string> &myData);
+int numberOfZerosOnes(vector<string> &myData);
 
 int main()
 {
     vector<string> myData;
 
     importData(myData);
-    cout<<"Number of Zeroes: "<<numberOfZeros(myData)<<endl;
-    cout<<"Number of Ones: "<<numberOfOnes(myData)<<endl;
+    cout<<"Number of Zeroes: "<<numberOfZerosOnes(myData)<<endl;
 
-    cout<<"Number of Zeroes + Number of Ones: "<<numberOfZeros(myData)+numberOfOnes(myData)<<endl;
-
-    system("PAUSE");
     return 0;
 }
 
@@ -48,14 +42,16 @@ void printData(vector<string> &myData)
     }
 }
 
-int numberOfZeros(vector<string> &myData)
+int numberOfZerosOnes(vector<string> &myData)
 {
-    //Counts the number of lines for each string containing 0 is a multiple of 3.
+    //Counts the number of lines for each string containing 0 is a multiple of 3 or 1 is a multiple of 2.
     int counting=0;
    for(int i=0; i<myData.size()-1; i++)
    {
        size_t n=count(myData[i].begin(), myData[i].end(), '0');
-       if(n%3==0)
+       size_t m=count(myData[i].begin(), myData[i].end(), '1');
+
+       if((n%3==0) || (m%2==0))
        {
            counting++;
        }
@@ -63,17 +59,3 @@ int numberOfZeros(vector<string> &myData)
    return counting;
 }
 
-int numberOfOnes(vector<string> &myData)
-{
-    //Counts the number of lines for each string containing 1 is a multiple of 2.
-    int counting=0;
-    for(int i=0; i<myData.size()-1; i++)
-    {
-    size_t n=count(myData[i].begin(), myData[i].end(), '1');
-    if(n%2==0)
-    {
-        counting++;
-    }
-    }
-    return counting;
-}
