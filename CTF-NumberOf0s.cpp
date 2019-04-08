@@ -1,44 +1,79 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <string>
+#include <algorithm>
+
 
 using namespace std;
 
-void importData(vector<double> &myData);
-void printData(vector<double> &myData);
+void importData(vector<string> &myData);
+void printData(vector<string> &myData);
+int numberOfZeros(vector<string> &myData);
+int numberOfOnes(vector<string> &myData);
 
 int main()
 {
-    vector<double> myData;
+    vector<string> myData;
 
     importData(myData);
-    printData(myData);
+    cout<<"Number of Zeroes: "<<numberOfZeros(myData)<<endl;
+    cout<<"Number of Ones: "<<numberOfOnes(myData)<<endl;
+
+    cout<<"Number of Zeroes + Number of Ones: "<<numberOfZeros(myData)+numberOfOnes(myData)<<endl;
 
     system("PAUSE");
     return 0;
 }
 
-void importData(vector<double> &myData)
+void importData(vector<string> &myData)
 {
     ifstream inData;
-    double data;
-    string line;
+    string num;
+
+
     inData.open("data.dat");
     while(!inData.eof())
     {
-        inData>>data;
-       // getline(inData, line);
-      //  cin.clear();
-        myData.push_back(data);
+        getline(inData, num);
+        myData.push_back(num);
     }
 inData.close();
 }
 
-void printData(vector<double> &myData)
+void printData(vector<string> &myData)
 {
     for(int i=0; i<myData.size()-1; i++)
     {
         cout<<myData[i]<<endl;
     }
+}
+
+int numberOfZeros(vector<string> &myData)
+{
+    //Counts the number of lines for each string containing 0 is a multiple of 3.
+    int counting=0;
+   for(int i=0; i<myData.size()-1; i++)
+   {
+       size_t n=count(myData[i].begin(), myData[i].end(), '0');
+       if(n%3==0)
+       {
+           counting++;
+       }
+   }
+   return counting;
+}
+
+int numberOfOnes(vector<string> &myData)
+{
+    //Counts the number of lines for each string containing 1 is a multiple of 2.
+    int counting=0;
+    for(int i=0; i<myData.size()-1; i++)
+    {
+    size_t n=count(myData[i].begin(), myData[i].end(), '1');
+    if(n%2==0)
+    {
+        counting++;
+    }
+    }
+    return counting;
 }
